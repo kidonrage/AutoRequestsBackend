@@ -17,5 +17,6 @@ function generateRefreshToken(userId) {
 }
 
 module.exports = {
-  generateTokens
+  generateTokens,
+  generateAccessToken
 }

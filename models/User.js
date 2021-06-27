@@ -1,4 +1,5 @@
-const { Schema, model, Types } = require('mongoose')
+const { Schema, model, Types } = require('mongoose');
+const Car = require('./Car');
 
 const schema = new Schema({
   login: { type: String, required: true, unique: true },
@@ -11,5 +12,6 @@ const schema = new Schema({
   type: { type: String, enum : ['passenger','driver'], required: true },
   transportApplications: [ {type: Types.ObjectId, ref: 'TransportApplication'} ],
 })
+
 
 module.exports = model('User', schema)

@@ -4,7 +4,7 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
-const { generateTokens } = require('../services/tokensService')
+const { generateTokens, generateAccessToken } = require('../services/tokensService')
 
 const registerUser = async (req, res) => {
   // Валидация
@@ -107,19 +107,19 @@ const logUserIn = async (req, res) => {
 }
 
 const updateUserRefreshToken = async (req, res) => {
-  const { token } = req.body
+  const { refreshToken } = req.cookies
 
   // if (!refreshToken || !user || !user.refreshTokens.includes(refreshToken)) {
-  if (!token) {
+  if (!refreshToken) {
     return res.status(401).send()
   }
 
   try {
-    const { userId } = await jwt.verify(token, config.get('refreshTokenSecret'))
+    const { userId } = await jwt.verify(refreshToken, config.get('refreshTokenSecret'))
 
     const user = await User.findOne({ _id: userId })
 
-    if (!user || !user.refreshTokens.includes(token)) {
+    if (!user || !user.refreshTokens.includes(refreshToken)) {
       return res.status(403).send()
     }
 

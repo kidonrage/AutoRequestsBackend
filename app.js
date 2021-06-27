@@ -1,6 +1,8 @@
 // Импортируем сторонние библиотеки
 const express = require('express')
 const config = require('config')
+const cookieParser = require("cookie-parser");
+
 
 // Импортируем роутеры
 const authRouter = require('./routers/authRouter')
@@ -14,6 +16,7 @@ const { requireAuth } = require('./middleware/requireAuth')
 const app = express()
 
 // Добавляем middleware для парсинга JSON в теле запроса
+app.use(cookieParser())
 app.use(express.json({extended: true}))
 
 // Настраиваем роутеры
