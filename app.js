@@ -4,11 +4,11 @@ const config = require('config')
 
 // Импортируем роутеры
 const authRouter = require('./routers/authRouter')
-const issuersRouter = require('./routers/driversRouter')
-const bondsRouter = require('./routers/transportApplicationsRouter')
+const driversRouter = require('./routers/driversRouter')
+const transportApplicationsRouter = require('./routers/transportApplicationsRouter')
 
 // Импортируем middleware'ы
-const { requireAuth } = require('./middlewares/requireAuth')
+const { requireAuth } = require('./middleware/requireAuth')
 
 // Создаем объект приложения
 const app = express()

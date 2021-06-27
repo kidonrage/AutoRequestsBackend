@@ -1,7 +1,10 @@
 const bcrypt = require('bcryptjs')
+const config = require('config')
 const { check, validationResult } = require('express-validator')
+const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
+const { generateTokens } = require('../services/tokensService')
 
 const registerUser = async (req, res) => {
   // Валидация
@@ -16,7 +19,7 @@ const registerUser = async (req, res) => {
   }
 
   try {
-    const { name, login, password } = req.body
+    const { login, password, type, firstName, lastName, patronymic, mobileNumber } = req.body
 
     const candidate = await User.findOne({ login })
 
@@ -31,7 +34,11 @@ const registerUser = async (req, res) => {
     const user = new User({
       login,
       password: hashedPassword,
-      name
+      firstName,
+      lastName,
+      patronymic,
+      mobileNumber,
+      type,
     })
 
     const savedUser = await user.save()
