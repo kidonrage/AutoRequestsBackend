@@ -4,8 +4,8 @@ const { getUserTransportApplications, saveTransportApplication } = require('../c
 
 const router = Router()
 
-router.get('transportApplication', requireAuth, getUserTransportApplications)
+router.get('transportApplication', getUserTransportApplications)
 
-router.post('transportApplication', requireAuth, saveTransportApplication)
+router.post('transportApplication', saveTransportApplication)
 
 module.exports = router
