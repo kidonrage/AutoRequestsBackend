@@ -1,11 +1,10 @@
 const { Router } = require('express')
 const { getDriversAvailable, getDriverAvailableTime } = require('../controllers/driversController')
-const { requireAuth } = require('../middleware/requireAuth')
 
 const router = Router()
 
-router.get('driver/available', requireAuth, getDriverAvailableTime)
+router.get('/available', getDriversAvailable)
 
-router.get('driver/:driverId/timeAvailable', requireAuth, getDriverAvailableTime)
+router.get('/:driverId/timeAvailable', getDriverAvailableTime)
 
 module.exports = router

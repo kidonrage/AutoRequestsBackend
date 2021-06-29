@@ -26,14 +26,20 @@ const checkUser = async (req, res, next) => {
 }
 
 const getUserFromAuthorizationHeader = async (authorizationHeaderValue) => {
+  if (!authorizationHeaderValue) {
+    return null
+  }
+
   const token = authorizationHeaderValue.split(' ')[1]
 
   if (!token) {
     return null
   }
 
+  console.log(token)
+
   try {
-    const decodedToken = await jwt.verify(token, config.get('accessJWTSecret'))
+    const decodedToken = await jwt.verify(token, config.get('accessTokenSecret'))
 
     console.log(decodedToken)
     
@@ -41,6 +47,7 @@ const getUserFromAuthorizationHeader = async (authorizationHeaderValue) => {
 
     return user
   } catch (e) {
+    console.log(e)
     return null
   }
 }
