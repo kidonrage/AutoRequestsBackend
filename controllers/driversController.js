@@ -37,12 +37,14 @@ const getDriverAvailableTime = async (req, res) => {
 const getDriversAvailable = async (req, res) => {
   const { date } = req.query
 
+  console.log(date)
+
   try {
     const parsedDate = new Date(date)
 
     const dayIndex = parsedDate.getDay() - 1
 
-    if (!dayIndex) {
+    if (typeof(dayIndex) !== "number") {
       throw new Error('Can\'t parse date')
     }
 

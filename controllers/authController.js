@@ -42,9 +42,9 @@ const registerUser = async (req, res) => {
     })
 
     const savedUser = await user.save()
-    const { password: userPassword, _id, ...publicUserData } = savedUser._doc
+    const { password: userPassword, ...publicUserData } = savedUser._doc
 
-    const { accessToken, refreshToken } = generateTokens(_id)
+    const { accessToken, refreshToken } = generateTokens(publicUserData._id)
 
     res.status(201).json({ message: "Пользователь создан", accessToken, refreshToken, user: publicUserData })
   } catch (e) {
@@ -86,12 +86,12 @@ const logUserIn = async (req, res) => {
 
     const { accessToken, refreshToken } = generateTokens(user._id)
 
-    const { password: userPassword, _id, ...publicUserData } = user._doc
+    const { password: userPassword, ...publicUserData } = user._doc
 
     try {
       const existingRefreshTokens = user.refreshTokens || []
 
-      await User.findByIdAndUpdate(_id, {
+      await User.findByIdAndUpdate(user._id, {
         refreshTokens: [...existingRefreshTokens, refreshToken]
       })
     } catch (e) {
@@ -109,7 +109,8 @@ const logUserIn = async (req, res) => {
 const updateUserRefreshToken = async (req, res) => {
   const { refreshToken } = req.cookies
 
-  // if (!refreshToken || !user || !user.refreshTokens.includes(refreshToken)) {
+  console.log(refreshToken)
+
   if (!refreshToken) {
     return res.status(401).send()
   }

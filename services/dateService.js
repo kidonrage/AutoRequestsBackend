@@ -2,10 +2,8 @@ const getDateFromString = (dateString) => {
   return new Date(dateString)
 }
 
-const getDayIndexFromDateString = (dateString) => {
-  const parsedDate = getDateFromString(dateString)
-
-  const day = parsedDate.getDay()
+const getDayIndexFromDate = (date) => {
+  const day = date.getDay()
 
   if (day === NaN) {
     throw new Error('Can\'t parse date')
@@ -14,6 +12,14 @@ const getDayIndexFromDateString = (dateString) => {
   return day - 1
 }
 
+const getDayIndexFromDateString = (dateString) => {
+  const parsedDate = getDateFromString(dateString)
+
+  return getDayIndexFromDate(parsedDate)
+}
+
 module.exports = {
-  getDayIndexFromDateString
+  getDayIndexFromDateString,
+  getDayIndexFromDate,
+  getDateFromString
 }

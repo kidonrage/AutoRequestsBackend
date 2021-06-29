@@ -9,7 +9,7 @@ function generateTokens(userId) {
 }
 
 function generateAccessToken(userId) {
-  return jwt.sign({ userId: userId }, config.get('accessTokenSecret'), { expiresIn: '25m' })
+  return jwt.sign({ userId: userId }, config.get('accessTokenSecret'), { expiresIn: '1d' })
 }
 
 function generateRefreshToken(userId) {
